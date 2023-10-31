@@ -12,23 +12,28 @@ class MinHeap {
     }
   
     // Removes the minimum value of minHeap
-    void removeMin() {
+    HuffTree removeMin() {
       if (size <= 0) {
-          return;
+          return null;
       }
-      else if (size == 1) {
+      HuffTree min = arr[1];
+      if (size == 1) {
         arr[1] = null;
         size --;
         lastOccupiedInd--;
-        return;
+        return min;
       }
       else {
         arr[1] = arr[lastOccupiedInd];
         this.bubbleDown(1);
         size--;
         lastOccupiedInd--;
-        return;
+        return min;
       }
+    }
+
+    int size() {
+        return size;
     }
   
     // Insearts a value into MinHeap and bubbles it up to the correct position
