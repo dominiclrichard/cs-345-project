@@ -45,6 +45,12 @@ class test1 {
 		assertEquals(tree3.compareTo(tree1), 0);
 		assertEquals(tree3.compareTo(tree), -1);
 
+		Character[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
+				'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+		for (Character c : alphabet) {
+			System.out.println(c.hashCode() % 26);
+		}
+
 	}
 
 }
