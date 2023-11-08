@@ -58,28 +58,4 @@ public class Huffman {
         }
         return decodedData.toString();
     }
-
-    public static void main(String[] args) {
-        String input = "this is an example for huffman encoding";
-
-        FrequencyTable frequencyTable = new FrequencyTable();
-        for (char character : input.toCharArray()) {
-            if (frequencyTable.getTable().containsKey(character)) {
-                frequencyTable.add(character);
-            } else {
-                frequencyTable.add(character);
-            }
-        }
-
-        HuffBaseNode root = buildHuffmanTree(frequencyTable);
-        HashMap<Character, String> huffmanCodes = new HashMap<Character, String>();
-        StringBuilder code = new StringBuilder();
-        buildHuffmanCodes(root, code, huffmanCodes);
-
-        String encodedData = encode(input, huffmanCodes);
-        System.out.println("Encoded data: " + encodedData);
-
-        String decodedData = decode(encodedData, root);
-        System.out.println("Decoded data: " + decodedData);
-    }
 }
