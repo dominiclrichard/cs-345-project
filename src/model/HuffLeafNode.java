@@ -1,31 +1,36 @@
 package model;
 
+
 public class HuffLeafNode implements HuffBaseNode {
+    private char element;
+    private int weight;
 
-	private char element; // Element for this node
-	private int weight; // Weight for this node
+    public HuffLeafNode(char element, int weight) {
+        this.element = element;
+        this.weight = weight;
+    }
 
-	/** Constructor */
-	public HuffLeafNode(char el, int wt) {
-		element = el;
-		weight = wt;
-	}
+    public char value() {
+        return element;
+    }
 
-	/** @return The element value */
-	public char value() {
-		return element;
-	}
+    @Override
+    public boolean isLeaf() {
+        return true;
+    }
 
-	@Override
-	/** @return true, node is external */
-	public boolean isLeaf() {
-		return true;
-	}
+    @Override
+    public int weight() {
+        return weight;
+    }
 
-	@Override
-	/** @return weight of node */
-	public int weight() {
-		return weight;
-	}
+    @Override
+    public HuffBaseNode left() {
+        return null;
+    }
 
+    @Override
+    public HuffBaseNode right() {
+        return null;
+    }
 }
