@@ -1,90 +1,82 @@
-// Minheap class for implementation of buildTree function
-class MinHeap {
-    HuffTree[] arr;
-    int size;
-    int lastOccupiedInd;
-  
-    // Constructor for MinHeap
-    MinHeap() {
-      size = 10;
-      lastOccupiedInd = 0;
-      arr = new HuffTree[10];
-    }
-  
-    // Removes the minimum value of minHeap
-    HuffTree removeMin() {
-      if (size <= 0) {
-          return null;
-      }
-      HuffTree min = arr[1];
-      if (size == 1) {
-        arr[1] = null;
-        size --;
-        lastOccupiedInd--;
-        return min;
-      }
-      else {
-        arr[1] = arr[lastOccupiedInd];
-        this.bubbleDown(1);
-        size--;
-        lastOccupiedInd--;
-        return min;
-      }
+package Model;
+
+public class MinHeap {
+    private HuffBaseNode[] heapArray;
+    private int size;
+    private int capacity;
+
+    public MinHeap(int capacity) {
+        this.capacity = capacity;
+        this.heapArray = new HuffBaseNode[capacity];
+        this.size = 0;
     }
 
-    int size() {
-        return size;
-    }
-  
-    // Insearts a value into MinHeap and bubbles it up to the correct position
-    void insert(HuffTree ins) {
-       arr[lastOccupiedInd + 1] = ins;
-       lastOccupiedInd ++;
-       size++;
-  
-       bubbleUp(lastOccupiedInd);
-      
-       if (lastOccupiedInd >= arr.length - 1) {
-          temp = arr[arr.length * 2];
-          for (int i = 1; i < arr.length; i++) {
-            temp[i] = arr[i];
-          }
-       }
-  
-    }
-  
-    // Bubbles up the value at index ind
-    void bubbleUp(int ind) {
-      int parent = ind /2;
-      if (parent > 0 && arr[ind].weight() < arr[parent].weight()) {
-        HuffTree tmp = arr[parent];
-        arr[parent] = arr[ind];
-        arr[ind] = tmp;
-        bubbleUp(parent);
-      } 
-    }
-  
-    // bubbles down the value at index ind
-    void bubbleDown(int ind) {
-      int left = 2*ind;
-      int right = (2 * ind) + 1;
-  
-      if (right <= lastOccupiedInd) {
-        int testSwap;
-        HuffTree temp = arr[ind];
-        if (arr[right].weight() < arr[left].weight()) {
-          testSwap = right;
+    // insert node
+    public void insert(HuffBaseNode value) {
+        if (size == capacity - 1) {
+            resizeHeap();
         }
-        else {
-          testSwap = left;
+        size++;
+        heapArray[size - 1] = value;
+        int current = size - 1;
+        while (current > 0 && heapArray[current].weight() < heapArray[(current - 1) / 2].weight()) {
+            swap(current, (current - 1) / 2);
+            current = (current - 1) / 2;
         }
-        
-        if (arr[testSwap].weight() < temp.weight()) {
-          arr[ind] = arr[testSwap];
-          arr[testSwap] = temp;
-          bubbleDown(testSwap);
-        }
-      }
     }
-  }
-  
+
+    // gets root
+    public HuffBaseNode removeMin() {
+        if (size == 0) {
+            return null;
+        }
+        HuffBaseNode min = heapArray[0];
+        heapArray[0] = heapArray[size - 1];
+        size--;
+        heapify(0);
+        return min;
+    }
+
+    // Other methods:
+    private void heapify(int index) {
+        int smallest = index;
+        int left = 2 * index + 1;
+        int right = 2 * index + 2;
+
+        if (left < size && heapArray[left].weight() < heapArray[smallest].weight()) {
+            smallest = left;
+        }
+
+        if (right < size && heapArray[right].weight() < heapArray[smallest].weight()) {
+            smallest = right;
+        }
+
+        if (smallest != index) {
+            swap(index, smallest);
+            heapify(smallest);
+        }
+    }
+
+    private void swap(int a, int b) {
+        HuffBaseNode temp = heapArray[a];
+        heapArray[a] = heapArray[b];
+        heapArray[b] = temp;
+    }
+
+    private void resizeHeap() {
+        int newCapacity = capacity * 2;
+        HuffBaseNode[] newHeapArray = new HuffBaseNode[newCapacity];
+        // Copy elements from the old array 
+        for (int i = 0; i < size; i++) {
+            newHeapArray[i] = heapArray[i];
+        }
+        // Update the capacity
+        capacity = newCapacity;
+        heapArray = newHeapArray;
+    }
+
+    // returns heap size
+    public int size(){
+        return this.size;
+    }
+}
