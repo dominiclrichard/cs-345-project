@@ -2,55 +2,44 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 
-import model.HuffInternalNode;
-import model.HuffLeafNode;
-import model.HuffTree;
+import model.Huffman;
 
 class test1 {
 
-	HuffLeafNode leaf1 = new HuffLeafNode('b', 0);
-	HuffLeafNode leaf2 = new HuffLeafNode('c', 0);
-	HuffTree tree1 = new HuffTree(leaf1, leaf2, 2);
-
 	@Test
-	void test1() {
-		assertEquals(tree1.weight(), 2);
-		assertEquals(tree1.root().weight(), tree1.weight());
-		assertEquals(tree1.root().isLeaf(), false);
-		assertEquals(((HuffInternalNode) (tree1.root())).left(), leaf1);
-		assertEquals(((HuffInternalNode) (tree1.root())).right(), leaf2);
-	}
+	public void testRandStr() {
+		char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 
-	@Test
-	void test2() {
-		assertEquals(leaf1.value(), 'b');
-		assertEquals(leaf2.value(), 'c');
-		assertEquals(leaf1.isLeaf(), true);
-		assertEquals(tree1.root().isLeaf(), false);
-		assertEquals(leaf2.weight(), 0);
-	}
+		int[] sizes = { 10, 50, 100, 500, 1000 };
 
-	HuffTree tree = new HuffTree('i', 3);
-	HuffLeafNode leaf3 = new HuffLeafNode('b', 0);
-	HuffLeafNode leaf4 = new HuffLeafNode('c', 0);
-	HuffLeafNode leaf5 = new HuffLeafNode('d', 1);
-	HuffTree tree3 = new HuffTree(leaf3, leaf4, 2);
+		for (int i : sizes) {
+			System.out.println("Testing with string size " + i);
+			String s = "";
+			int j = 0;
+			Random rand = new Random();
 
-	@Test
-	void test3() {
-		assertEquals(tree.root().isLeaf(), true);
-		assertEquals(tree.compareTo(tree1), 1);
-		assertEquals(tree3.compareTo(tree1), 0);
-		assertEquals(tree3.compareTo(tree), -1);
+			while (j < i) {
+				int randomInd = rand.nextInt(26);
+				s += alphabet[randomInd];
+				j += 1;
+			}
+			// Random string passed to Huffman class
+			System.out.println("Input String: " + s);
+			Huffman huff = new Huffman();
+			// Pass random string to Huffman class for encoding
+			String encoded = huff.encode(s);
+			// Print encoded string
+			System.out.println("Encoded String: " + encoded);
+			// Decode and print encoded string to ensure equals input
+			System.out.println("Decoded String: " + huff.decode(encoded));
+			System.out.println();
 
-		Character[] alphabet = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q',
-				'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
-		for (Character c : alphabet) {
-			System.out.println(c.hashCode() % 26);
+			assertEquals(s, huff.decode(encoded));
 		}
-
 	}
 
 }
