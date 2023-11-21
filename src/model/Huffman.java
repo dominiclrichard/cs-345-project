@@ -28,6 +28,10 @@ public class Huffman {
 		return rootNode;
 	}
 
+	public HuffBaseNode getRoot() {
+		return rootNode;
+	}
+
 	public static void buildHuffmanCodes(HuffBaseNode root, StringBuilder code,
 			HashMap<Character, String> huffmanCodes) {
 		if (root == null) {
@@ -133,6 +137,33 @@ public class Huffman {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void toString(HuffBaseNode node, int num) {
+		if (node == null) {
+			return;
+		}
+		num += 5;
+
+		toString(node.right(), num);
+
+		System.out.print("\n");
+
+		for (int i = 5; i < num; i++) {
+			System.out.print(" ");
+		}
+		if (node.isLeaf()) {
+			HuffLeafNode leafNode = ((HuffLeafNode) node);
+			System.out.print(leafNode.value() + "(" + leafNode.weight() + ")\n");
+		}
+
+		if (!node.isLeaf()) {
+			HuffInternalNode intNode = ((HuffInternalNode) node);
+			System.out.print(intNode.weight() + "\n");
+		}
+
+		toString(node.left(), num);
+
 	}
 
 }

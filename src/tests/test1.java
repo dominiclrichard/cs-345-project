@@ -14,7 +14,7 @@ class test1 {
 	public void testRandStr() {
 		char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 
-		int[] sizes = { 10, 50, 100, 500, 1000 };
+		int[] sizes = { 10, 50, 100, 500, 1000, 5000 };
 
 		for (int i : sizes) {
 			System.out.println("Testing with string size " + i);

@@ -11,7 +11,7 @@ public class Testing {
 	public static void testRandStr() {
 		char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 
-		int[] sizes = { 10, 50, 100, 500, 1000 };
+		int[] sizes = { 10, 20, 30, 40, 50, 100, 500, 1000, 5000 };
 
 		for (int i : sizes) {
 			System.out.println("Testing with string size " + i);
@@ -29,6 +29,9 @@ public class Testing {
 			Huffman huff = new Huffman();
 			// Pass random string to Huffman class for encoding
 			String encoded = huff.encode(s);
+			System.out.println("String Representation of Encoded Tree");
+			System.out.println("-------------------------------------");
+			huff.toString(huff.getRoot(), 0);
 			// Print encoded string
 			System.out.println("Encoded String: " + encoded);
 			// Decode and print encoded string to ensure equals input
