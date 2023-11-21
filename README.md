@@ -6,7 +6,7 @@ This Java code implements Huffman encoding, a lossless compression algorithm. It
 
 <h2>How to Use</h2>
 
-Once the model folder is within your desired directorry, you can declare a Huffman object as follows:
+Once the model folder is within your desired directory, you can declare a Huffman object as follows:
 <code>Huffman myHuffObj = new Huffman();</code>
 
 <h4>Encoding</h4>
